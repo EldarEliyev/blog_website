@@ -1,20 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, permissions
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny
 from django.db.models import Q
 
 from .models import Blog
 from .serializer import BlogSerializer
 
 
-# API üçün ViewSet (DRF ilə)
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
-
-# Axtarışlı və sıralı post siyahısı görünüşü
 def blog_list_view(request):
     query = request.GET.get('q')
     if query:
